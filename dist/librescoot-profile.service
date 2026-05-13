@@ -1,5 +1,5 @@
 [Unit]
-Description=LibreScoot Profile Service
+Description=Librescoot Profile Service
 After=redis.service
 Requires=redis.service
 
