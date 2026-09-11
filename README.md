@@ -1,6 +1,6 @@
-# profile-service
+# Librescoot Profile Service
 
-Figures out who's riding the scooter and applies their settings. Replaces `settings-service`.
+Figures out who's riding the scooter and applies their settings. This is a prototype, will replace `settings-service`.
 
 Part of the [Librescoot](https://librescoot.org/) open-source platform.
 
@@ -9,7 +9,7 @@ GOTOOLCHAIN=go1.25.7 make build-host
 ./bin/profile-service --redis localhost:6379 --db /tmp/profiles.db
 ```
 
-## What it does
+## Capabilities
 
 - Identifies the current rider via keycard UID, cloud user ID, or BLE MAC
 - Manages per-user profiles with settings, saved locations, and usage stats
@@ -28,13 +28,15 @@ On unlock, the service checks (in order):
 
 On lock, per-user settings are reverted to global-only.
 
-## Storage
+## Operation and interfaces
+
+### Storage
 
 SQLite WAL at `/data/profiles.db`. Six tables: `profiles`, `identifiers`, `settings_global`, `settings_user`, `saved_locations`, `usage_stats`.
 
 Survives reboots and OTA updates (`/data/` partition).
 
-## Redis interface
+### Redis interface
 
 | Key | Type | What's in it |
 |-----|------|-------------|
@@ -62,12 +64,9 @@ GOTOOLCHAIN=go1.25.7 make build-host   # native
 GOTOOLCHAIN=go1.25.7 make test
 ```
 
-## Deploy
+## Packaging
 
-```bash
-scp bin/profile-service deep-blue:/data/profile-service-test
-ssh deep-blue "systemctl stop librescoot-profile && cp /data/profile-service-test /usr/bin/profile-service && systemctl start librescoot-profile"
-```
+The Yocto layer in [meta-librescoot](https://github.com/librescoot/meta-librescoot) installs `/usr/bin/profile-service` and the systemd unit `librescoot-profile.service`.
 
 ## License
 
@@ -79,3 +78,5 @@ The maintainers reserve the right to grant separate licenses for commercial dist
 
 [cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/
 [cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
+
+Made with ❤️ by the Librescoot community
