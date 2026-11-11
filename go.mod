@@ -4,7 +4,7 @@ go 1.24.0
 
 require (
 	github.com/BurntSushi/toml v1.6.0
-	github.com/librescoot/redis-ipc v0.15.3
+	github.com/librescoot/redis-ipc v0.15.5-0.20261111175103-0bca8184dc69
 	modernc.org/sqlite v1.37.1
 )
 
